@@ -158,6 +158,16 @@ function initWidget(config) {
   }
 }
 
+export function unmountWidget() {
+  if (window._hw && typeof window._hw === 'function') {
+    window._hw("unmount");
+  }
+  window._hw = null;
+  if (document.getElementById('_hw')) {
+    document.getElementById('_hw').remove();
+  }
+}
+
 /**
  * Initialize the Premagic Login Widget (for registration forms)
  * 

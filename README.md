@@ -108,6 +108,25 @@ const DEFAULT_CONFIG = {
 - If your form uses different field names, update the selectors in `DEFAULT_AUTOFILLER_CONFIG`
 - This configuration is used by both the Login Widget and Poster Creator Widget
 
+### Step 4: Using PremagicService (Optional)
+
+The `PremagicService` provides simple functions for widget initialization:
+
+```javascript
+import { initLoginWidget, initPosterCreatorWidget, unmountWidget } from './premagic-widgets/PremagicService';
+
+// Initialize login widget (usually in RegistrationPage)
+initLoginWidget();
+
+// Initialize poster creator widget (usually in SuccessPage)
+initPosterCreatorWidget();
+
+// Manually unmount widget (usually handled automatically by PremagicWidget component)
+unmountWidget();
+```
+
+**Note**: In most cases, you don't need to call these functions directly. The `PremagicWidget` component handles initialization and cleanup automatically. The functions are exported for advanced use cases.
+
 ## That's It!
 
 Once you've completed these three steps, your Premagic widgets are installed and ready to use. The widgets will automatically load when the components are rendered.
@@ -140,15 +159,27 @@ premagic-event-example/
 - **Widget Type**: Registration/Login widget
 - **Purpose**: Quick login and form autofill
 - **Container ID**: `premagic-poster-creator-widget-root`
-- **Service**: Uses `PremagicService.initLoginWidget()` from `premagic-widgets/`
+- **Service**: Uses `initLoginWidget()` from `premagic-widgets/PremagicService.js`
 - **Component**: Uses `<PremagicWidget variant="login" />` from `premagic-widgets/`
+- **Cleanup**: Automatically unmounts when component unmounts (handled by PremagicWidget)
 
 ### Poster Creator Widget (SuccessPage.js)
 - **Widget Type**: Poster creation widget
 - **Purpose**: Allow attendees to create and share event posters
 - **Container ID**: `premagic-poster-creator-widget-root`
-- **Service**: Uses `PremagicService.initPosterCreatorWidget()` from `premagic-widgets/`
+- **Service**: Uses `initPosterCreatorWidget()` from `premagic-widgets/PremagicService.js`
 - **Component**: Uses `<PremagicWidget variant="poster" />` from `premagic-widgets/`
+- **Cleanup**: Automatically unmounts when component unmounts (handled by PremagicWidget)
+
+### Widget Lifecycle
+
+The Premagic widgets handle their own lifecycle automatically:
+
+1. **Initialization**: When a page with a Premagic widget loads, the widget automatically initializes
+2. **Cleanup**: When you navigate away from a page, the `PremagicWidget` component automatically calls `unmountWidget()` to clean up
+3. **Re-initialization**: When you navigate back to a page, the widget automatically re-initializes with a fresh state
+
+**No manual cleanup needed** - the `PremagicWidget` component handles everything via React's `useEffect` cleanup function.
 
 ## Important Notes
 
@@ -158,9 +189,13 @@ premagic-event-example/
 
 3. **All Premagic Code in One Place**: All Premagic-related code (service and widget component) is now in the `premagic-widgets/` folder for easy integration.
 
-3. **Widget Container IDs**: Both widgets use the same container ID (`premagic-poster-creator-widget-root`). This is intentional and works correctly as they appear on different pages.
+4. **Widget Container IDs**: Both widgets use the same container ID (`premagic-poster-creator-widget-root`). This is intentional and works correctly as they appear on different pages.
 
-4. **Script Loading**: The Premagic widget script is loaded dynamically. The code handles cases where the script is already loaded or needs to be loaded fresh.
+5. **Script Loading**: The Premagic widget script is loaded dynamically with cache-busting to ensure proper re-initialization. The code handles cases where the script is already loaded or needs to be loaded fresh.
+
+6. **Automatic Widget Cleanup**: Widgets automatically clean up when components unmount. The `PremagicWidget` component uses React's `useEffect` cleanup to call `unmountWidget()` from `PremagicService`, ensuring proper cleanup of widget state, script elements, and window objects. **No manual cleanup needed**.
+
+7. **Automatic Re-initialization**: When navigating back to a page with a widget, the widget automatically re-initializes. The service uses cache-busting (timestamp parameter) to force the ES module to re-execute, allowing the widget to process the initialization queue again. This ensures widgets work correctly when navigating between pages.
 
 ## Build for Production
 
@@ -182,6 +217,18 @@ This creates an optimized production build in the `build` folder.
 - Verify `autofillerConfig.selectors` match your form field `name` attributes
 - Check that `autofillerConfig.enabled` is set to `true`
 - Ensure the Premagic Login widget is properly initialized
+
+### Widget not re-initializing when navigating back?
+- The widget uses cache-busting to force re-initialization - this should work automatically
+- Check browser console for errors related to "LoaderObject"
+- Ensure the `PremagicWidget` component is properly unmounting (check React DevTools)
+- Verify that `unmountWidget()` is being called in the component cleanup
+
+### "Widget didn't find LoaderObject" error?
+- This error occurs when the widget script executes before the queue is initialized
+- The service initializes the queue at module load time to prevent this
+- If you see this error, check that `PremagicService.js` is imported correctly
+- Ensure you're not manually modifying `window._hw` before the widget initializes
 
 
 ## Support

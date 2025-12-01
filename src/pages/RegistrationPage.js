@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { initLoginWidget } from '../premagic-widgets/PremagicService';
+import { initLoginWidget, unmountWidget } from '../premagic-widgets/PremagicService';
 import PremagicWidget from '../premagic-widgets/PremagicWidget';
 import RegistrationForm from '../components/RegistrationForm';
 import '../styles.css';
@@ -29,14 +29,20 @@ const RegistrationPage = () => {
      * 
      * The configuration is handled by PremagicService. To customize:
      * 1. Update DEFAULT_CONFIG in PremagicService.js with your Premagic credentials
-     * 2. Or pass custom config here: PremagicService.initLoginWidget({ shareId: "...", ... })
+     * 2. Or pass custom config here: initLoginWidget({ shareId: "...", ... })
      * 
      * The autofillerConfig.selectors map Premagic fields to your form field names.
      * Make sure the selectors (e.g., "[name='firstName']") match your HTML form field
      * name attributes exactly. Update DEFAULT_AUTOFILLER_CONFIG in PremagicService.js
      * if your form uses different field names.
+     * 
      */
     initLoginWidget();
+    
+    // Cleanup function to handle component unmount
+    return () => {
+      unmountWidget();
+    };
   }, []);
 
   const handleInputChange = (e) => {

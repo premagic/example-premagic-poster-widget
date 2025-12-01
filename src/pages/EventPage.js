@@ -12,7 +12,6 @@ const EventPage = () => {
     time: '9:00 AM - 6:00 PM',
     location: 'Cairo Convention Center, Egypt',
     description: 'Join us for an exciting conference on Artificial Intelligence and its applications. Network with industry leaders, attend insightful sessions, and explore the future of AI.',
-    image: 'https://via.placeholder.com/800x400?text=AI+Everything+Egypt'
   };
 
   const tickets = [
@@ -65,10 +64,6 @@ const EventPage = () => {
         </div>
 
         <div className="event-content">
-          <div className="event-image-container">
-            <img src={eventInfo.image} alt={eventInfo.title} className="event-image" />
-          </div>
-
           <div className="event-description">
             <h2>About the Event</h2>
             <p>{eventInfo.description}</p>

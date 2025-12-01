@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { initPosterCreatorWidget } from '../premagic-widgets/PremagicService';
+import { initPosterCreatorWidget, unmountWidget } from '../premagic-widgets/PremagicService';
 import PremagicWidget from '../premagic-widgets/PremagicWidget';
 import '../styles.css';
 
@@ -49,11 +49,16 @@ const SuccessPage = () => {
      * 
      * The configuration is handled by PremagicService. To customize:
      * 1. Update DEFAULT_CONFIG in PremagicService.js with your Premagic credentials
-     * 2. Or pass custom config here: PremagicService.initPosterCreatorWidget({ shareId: "...", ... })
+     * 2. Or pass custom config here: initPosterCreatorWidget({ shareId: "...", ... })
      * 
-     * Make sure to use the same credentials as in RegistrationForm.js
+     * Make sure to use the same credentials as in RegistrationPage.js
      */
     initPosterCreatorWidget();
+    
+    // Cleanup function to handle component unmount
+    return () => {
+      unmountWidget();
+    };
   }, []);
 
   if (!ticket || !formData) {

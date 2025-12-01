@@ -1,23 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { unmountWidget } from './PremagicService';
 
 /**
  * PREMAGIC WIDGET COMPONENT
  * 
  * Reusable component for displaying Premagic widgets with loading skeleton.
+ * Handles widget cleanup (unmount) when component unmounts.
  * 
  * @param {string} variant - Widget variant: 'login' or 'poster'
  * @param {string} containerClassName - Optional CSS class for the container
  * @param {string} title - Optional title for poster widget
  * @param {string} description - Optional description for poster widget
  */
-const PremagicWidget = ({ 
-  variant = 'login', 
+const PremagicWidget = ({
+  variant = 'login',
   containerClassName = '',
   title = '',
   description = ''
 }) => {
+  /**
+   * Cleanup: Unmount widget when component unmounts
+   * This ensures proper cleanup when navigating away from the page,
+   * allowing the widget to re-initialize correctly when coming back.
+   */
+  useEffect(() => {
+    return () => {
+      unmountWidget();
+    };
+  }, []);
+
   const isPoster = variant === 'poster';
-  const containerClass = isPoster 
+  const containerClass = isPoster
     ? `premagic-poster-container ${containerClassName}`.trim()
     : `premagic-widget-container ${containerClassName}`.trim();
 
@@ -27,7 +40,7 @@ const PremagicWidget = ({
       {isPoster && description && (
         <p className="poster-description">{description}</p>
       )}
-      
+
       <div id="premagic-poster-creator-widget-root">
         {isPoster ? (
           // Poster widget loading skeleton
@@ -48,7 +61,7 @@ const PremagicWidget = ({
           </div>
         )}
       </div>
-      
+
       <style>{`
         .premagic-widget-loading-sk {
           flex: 1;
