@@ -1,67 +1,20 @@
-# Premagic Event Example
+# Premagic Widgets for React
 
-A sample React event page demonstrating the integration of Premagic widgets for event registration and poster creation.
+A simple guide to integrate Premagic Login and Poster Creator widgets into your React application.
 
-## Features
+## What Are Premagic Widgets?
 
-- **Event Page**: Display event information and ticket selection
-- **Registration Form**: Form with Premagic Login widget for quick registration
-- **Success Page**: Registration confirmation with Premagic Poster Creator widget
-- **Hard Navigation**: Full page reload on success page for clean state management
+Premagic provides two widgets for event applications:
 
-## Getting Started
+1. **Login Widget** - Quick LinkedIn login and form autofill for registration pages
+2. **Poster Creator Widget** - Allows attendees to create and share event posters on success/confirmation pages
 
-### Prerequisites
+## Quick Start
 
-- Node.js (v20 LTS recommended, v14 or higher required)
-- npm or yarn
-- nvm (Node Version Manager) - optional but recommended
+### Step 1: Install Dependencies
 
-### Installation
+Make sure your React app has these dependencies:
 
-1. **If using nvm**, install and use the correct Node version:
-```bash
-nvm install
-nvm use
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm start
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Integration Guide for Clients
-
-This guide explains how to integrate the Premagic widgets into your existing event application.
-
-### Step 1: Copy Required Files
-
-Copy the following files to your project:
-
-#### Required Pages:
-- `src/pages/EventPage.js` - Event information and ticket selection page
-- `src/pages/RegistrationPage.js` - Registration page with Premagic Login widget
-- `src/pages/SuccessPage.js` - Success page with Premagic Poster Creator widget
-
-#### Required Components:
-- `src/components/RegistrationForm.js` - Reusable registration form component
-
-#### Required Premagic Widgets (All in one folder):
-- `src/premagic-widgets/PremagicService.js` - Premagic widget service for easy integration
-- `src/premagic-widgets/PremagicWidget.js` - Reusable Premagic widget component
-
-#### Required Styles:
-- `src/styles.css` - **Single unified CSS file** containing all styles for the entire application
-
-#### Required Dependencies:
-Make sure your `package.json` includes:
 ```json
 {
   "dependencies": {
@@ -72,167 +25,363 @@ Make sure your `package.json` includes:
 }
 ```
 
-### Step 2: Add Conversion Tracking Scripts
+### Step 2: Copy Premagic Widget Files
 
-**IMPORTANT**: Add these scripts to the `<head>` tag of your main HTML file (usually `public/index.html` or your root HTML template):
+Copy these two files to your React project:
 
-```html
-<!-- Premagic Conversion Tracking - Add to <head> tag -->
-<link rel="preload" href="https://asts.premagic.com/s/poster-widget/premagic-poster-widget.js" as="script" crossorigin="anonymous" />
-<script src="https://asts.premagic.com/s/poster-conversion-tracker/ptm.js"></script>
+```
+src/premagic-widgets/
+├── PremagicService.js    # Widget initialization service
+└── PremagicWidget.js     # React component wrapper
 ```
 
-**Where to add**: This should be in the `<head>` section of ALL pages where you want to track conversions.
+**These are the only files you need** - they handle all Premagic widget functionality.
 
-### Step 3: Configure Premagic Widget Settings
+### Step 3: Add Conversion Tracking Scripts
 
-You need to update the Premagic configuration in **two places**:
+Add these scripts to the `<head>` tag of your main HTML file (`public/index.html` or your root HTML template):
 
-#### A. PremagicService.js - Configuration
+```html
+<head>
+  <!-- Premagic Conversion Tracking -->
+  <link rel="preload" href="https://asts.premagic.com/s/poster-widget/premagic-poster-widget.js" as="script" crossorigin="anonymous" />
+  <script src="https://asts.premagic.com/s/poster-conversion-tracker/ptm.js"></script>
+</head>
+```
+
+**Important**: Add this to ALL pages where you want to track conversions.
+
+### Step 4: Configure Your Premagic Credentials
 
 Open `src/premagic-widgets/PremagicService.js` and update the `DEFAULT_CONFIG` object with your Premagic credentials:
 
 ```javascript
 const DEFAULT_CONFIG = {
-  shareId: "YOUR_SHARE_ID",              // ⚠️ REPLACE: Your share ID
-  projectId: "YOUR_PROJECT_ID",           // ⚠️ REPLACE: Your project ID
-  eventId: "YOUR_EVENT_ID",               // ⚠️ REPLACE: Your event ID
-  websiteId: "YOUR_WEBSITE_ID",          // ⚠️ REPLACE: Your website ID
-  domain: "YOUR_DOMAIN",                 // ⚠️ REPLACE: Your domain
+  shareId: "YOUR_SHARE_ID",              // ⚠️ REPLACE with your share ID
+  projectId: "YOUR_PROJECT_ID",          // ⚠️ REPLACE with your project ID
+  eventId: "YOUR_EVENT_ID",              // ⚠️ REPLACE with your event ID
+  websiteId: "YOUR_WEBSITE_ID",          // ⚠️ REPLACE with your website ID
+  domain: "YOUR_DOMAIN",                 // ⚠️ REPLACE with your domain
 };
 ```
 
-**Key Points:**
-- Update all IDs (shareId, projectId, eventId, websiteId, domain) with your actual Premagic credentials
-- The `DEFAULT_AUTOFILLER_CONFIG.selectors` should match your HTML form field `name` attributes
-- If your form uses different field names, update the selectors in `DEFAULT_AUTOFILLER_CONFIG`
-- This configuration is used by both the Login Widget and Poster Creator Widget
-
-### Step 4: Using PremagicService (Optional)
-
-The `PremagicService` provides simple functions for widget initialization:
+**Also update the autofiller selectors** if your form uses different field names:
 
 ```javascript
-import { initLoginWidget, initPosterCreatorWidget, unmountWidget } from './premagic-widgets/PremagicService';
+const DEFAULT_AUTOFILLER_CONFIG = {
+  enabled: true,
+  selectors: {
+    firstName: "[name='firstName']",     // Update to match your form field names
+    lastName: "[name='lastName']",
+    email: "[name='emailId']",
+    // ... other selectors
+  }
+};
+```
 
-// Initialize login widget (usually in RegistrationPage)
+### Step 5: Use the Widgets in Your React Components
+
+#### Login Widget (Registration Page)
+
+```jsx
+import React, { useEffect } from 'react';
+import { initLoginWidget } from './premagic-widgets/PremagicService';
+import PremagicWidget from './premagic-widgets/PremagicWidget';
+
+const RegistrationPage = () => {
+  useEffect(() => {
+    // Initialize the login widget
+    initLoginWidget();
+  }, []);
+
+  return (
+    <div>
+      <h1>Register for Event</h1>
+      
+      {/* Premagic Login Widget */}
+      <PremagicWidget variant="login" />
+      
+      {/* Your registration form */}
+      <form>
+        {/* form fields */}
+      </form>
+    </div>
+  );
+};
+```
+
+#### Poster Creator Widget (Success/Confirmation Page)
+
+```jsx
+import React, { useEffect } from 'react';
+import { initPosterCreatorWidget } from './premagic-widgets/PremagicService';
+import PremagicWidget from './premagic-widgets/PremagicWidget';
+
+const SuccessPage = () => {
+  useEffect(() => {
+    // Initialize the poster creator widget
+    initPosterCreatorWidget();
+  }, []);
+
+  return (
+    <div>
+      <h1>Registration Successful!</h1>
+      
+      {/* Premagic Poster Creator Widget */}
+      <PremagicWidget 
+        variant="poster"
+        title="Create Your Event Poster"
+        description="Personalize and share a poster to let your network know you're attending!"
+      />
+    </div>
+  );
+};
+```
+
+## How It Works
+
+### Automatic Lifecycle Management
+
+The `PremagicWidget` component handles everything automatically:
+
+1. **Initialization**: When the component mounts, it initializes the widget
+2. **Cleanup**: When the component unmounts, it automatically cleans up the widget
+3. **Re-initialization**: When you navigate back to the page, the widget re-initializes with fresh state
+
+**You don't need to manage widget lifecycle manually** - the component handles it all via React's `useEffect` cleanup.
+
+### Widget Container
+
+Both widgets use the same container ID: `premagic-poster-creator-widget-root`
+
+This is intentional and works correctly because:
+- Widgets appear on different pages
+- The container is automatically created by the `PremagicWidget` component
+- Each widget instance is properly isolated
+
+## API Reference
+
+### PremagicService Functions
+
+#### `initLoginWidget(config?)`
+
+Initializes the Premagic Login widget for registration forms.
+
+```javascript
+import { initLoginWidget } from './premagic-widgets/PremagicService';
+
+// Use default config
 initLoginWidget();
 
-// Initialize poster creator widget (usually in SuccessPage)
+// Or override specific values
+initLoginWidget({
+  shareId: "custom-share-id",
+  redirectUrl: "/custom-redirect"
+});
+```
+
+**Config options:**
+- `shareId` - Premagic share ID
+- `projectId` - Premagic project ID
+- `eventId` - Premagic event ID
+- `websiteId` - Premagic website ID
+- `domain` - Premagic domain
+- `redirectUrl` - Optional redirect URL after login
+- `autofillerConfig` - Autofiller configuration object
+
+#### `initPosterCreatorWidget(config?)`
+
+Initializes the Premagic Poster Creator widget for success/confirmation pages.
+
+```javascript
+import { initPosterCreatorWidget } from './premagic-widgets/PremagicService';
+
+// Use default config
 initPosterCreatorWidget();
 
-// Manually unmount widget (usually handled automatically by PremagicWidget component)
+// Or override specific values
+initPosterCreatorWidget({
+  shareId: "custom-share-id",
+  type: "SPEAKER"
+});
+```
+
+**Config options:**
+- `shareId` - Premagic share ID
+- `projectId` - Premagic project ID
+- `eventId` - Premagic event ID
+- `websiteId` - Premagic website ID
+- `domain` - Premagic domain
+- `type` - Widget type (default: "ATTENDEE")
+- `widgetStyle` - Widget style (default: "preview")
+
+#### `unmountWidget()`
+
+Manually unmount a widget (usually not needed - handled automatically by `PremagicWidget`).
+
+```javascript
+import { unmountWidget } from './premagic-widgets/PremagicService';
+
 unmountWidget();
 ```
 
-**Note**: In most cases, you don't need to call these functions directly. The `PremagicWidget` component handles initialization and cleanup automatically. The functions are exported for advanced use cases.
+### PremagicWidget Component
 
-## That's It!
-
-Once you've completed these three steps, your Premagic widgets are installed and ready to use. The widgets will automatically load when the components are rendered.
-
-## Project Structure
-
-```
-premagic-event-example/
-├── public/
-│   └── index.html          # HTML template with Premagic tracking scripts
-├── src/
-│   ├── pages/
-│   │   ├── EventPage.js    # Event information and ticket selection
-│   │   ├── RegistrationPage.js  # Registration page with login widget
-│   │   └── SuccessPage.js # Success page with poster creator widget
-│   ├── components/
-│   │   └── RegistrationForm.js  # Reusable registration form component
-│   ├── premagic-widgets/
-│   │   ├── PremagicService.js  # Premagic widget service
-│   │   └── PremagicWidget.js   # Reusable Premagic widget component
-│   ├── styles.css          # Single unified CSS file for entire app
-│   ├── App.js              # Main app component with routing
-│   └── index.js            # Entry point
-└── package.json
+```jsx
+<PremagicWidget 
+  variant="login" | "poster"    // Required: Widget type
+  containerClassName=""         // Optional: Additional CSS class
+  title=""                       // Optional: Title (for poster widget)
+  description=""                 // Optional: Description (for poster widget)
+/>
 ```
 
-## Widget Details
+**Props:**
+- `variant` (required) - Either `"login"` or `"poster"`
+- `containerClassName` (optional) - Additional CSS classes for the container
+- `title` (optional) - Title text (only shown for poster widget)
+- `description` (optional) - Description text (only shown for poster widget)
 
-### Login Widget (RegistrationPage.js)
-- **Widget Type**: Registration/Login widget
-- **Purpose**: Quick login and form autofill
-- **Container ID**: `premagic-poster-creator-widget-root`
-- **Service**: Uses `initLoginWidget()` from `premagic-widgets/PremagicService.js`
-- **Component**: Uses `<PremagicWidget variant="login" />` from `premagic-widgets/`
-- **Cleanup**: Automatically unmounts when component unmounts (handled by PremagicWidget)
+## Configuration
 
-### Poster Creator Widget (SuccessPage.js)
-- **Widget Type**: Poster creation widget
-- **Purpose**: Allow attendees to create and share event posters
-- **Container ID**: `premagic-poster-creator-widget-root`
-- **Service**: Uses `initPosterCreatorWidget()` from `premagic-widgets/PremagicService.js`
-- **Component**: Uses `<PremagicWidget variant="poster" />` from `premagic-widgets/`
-- **Cleanup**: Automatically unmounts when component unmounts (handled by PremagicWidget)
+### Autofiller Configuration
 
-### Widget Lifecycle
+The autofiller automatically fills form fields when users log in via the Login Widget. Update the selectors to match your form field `name` attributes:
 
-The Premagic widgets handle their own lifecycle automatically:
-
-1. **Initialization**: When a page with a Premagic widget loads, the widget automatically initializes
-2. **Cleanup**: When you navigate away from a page, the `PremagicWidget` component automatically calls `unmountWidget()` to clean up
-3. **Re-initialization**: When you navigate back to a page, the widget automatically re-initializes with a fresh state
-
-**No manual cleanup needed** - the `PremagicWidget` component handles everything via React's `useEffect` cleanup function.
-
-## Important Notes
-
-1. **Configuration Values**: Make sure to update ALL configuration values (shareId, projectId, eventId, websiteId, domain) in `premagic-widgets/PremagicService.js` with your actual Premagic credentials. This single configuration is used by both widgets.
-
-2. **Form Field Names**: The autofiller selectors in `premagic-widgets/PremagicService.js` (DEFAULT_AUTOFILLER_CONFIG) must match your HTML form field `name` attributes exactly. If your form uses different field names, update the selectors accordingly.
-
-3. **All Premagic Code in One Place**: All Premagic-related code (service and widget component) is now in the `premagic-widgets/` folder for easy integration.
-
-4. **Widget Container IDs**: Both widgets use the same container ID (`premagic-poster-creator-widget-root`). This is intentional and works correctly as they appear on different pages.
-
-5. **Script Loading**: The Premagic widget script is loaded dynamically with cache-busting to ensure proper re-initialization. The code handles cases where the script is already loaded or needs to be loaded fresh.
-
-6. **Automatic Widget Cleanup**: Widgets automatically clean up when components unmount. The `PremagicWidget` component uses React's `useEffect` cleanup to call `unmountWidget()` from `PremagicService`, ensuring proper cleanup of widget state, script elements, and window objects. **No manual cleanup needed**.
-
-7. **Automatic Re-initialization**: When navigating back to a page with a widget, the widget automatically re-initializes. The service uses cache-busting (timestamp parameter) to force the ES module to re-execute, allowing the widget to process the initialization queue again. This ensures widgets work correctly when navigating between pages.
-
-## Build for Production
-
-```bash
-npm run build
+```javascript
+// In PremagicService.js
+const DEFAULT_AUTOFILLER_CONFIG = {
+  enabled: true,
+  selectors: {
+    firstName: "[name='firstName']",        // Maps to <input name="firstName">
+    lastName: "[name='lastName']",          // Maps to <input name="lastName">
+    email: "[name='emailId']",             // Maps to <input name="emailId">
+    companyName: "[name='companyName']",   // Maps to <input name="companyName">
+    role: "[name='jobTitle']",             // Maps to <input name="jobTitle">
+    phone: "[name='phone']",               // Maps to <input name="phone">
+    countryCode: "[name='countryCode']",   // Maps to <input name="countryCode">
+    // ... more selectors
+  }
+};
 ```
 
-This creates an optimized production build in the `build` folder.
+**Important**: The selectors must match your HTML form field `name` attributes exactly.
 
 ## Troubleshooting
 
-### Widget not appearing?
-- Check browser console for errors
-- Verify all configuration IDs are correct
-- Ensure the widget container element exists in the DOM
-- Check that the Premagic script is loading (Network tab in DevTools)
+### Widget Not Appearing?
 
-### Form autofill not working?
-- Verify `autofillerConfig.selectors` match your form field `name` attributes
-- Check that `autofillerConfig.enabled` is set to `true`
-- Ensure the Premagic Login widget is properly initialized
+1. **Check browser console** for errors
+2. **Verify configuration** - All IDs in `DEFAULT_CONFIG` must be correct
+3. **Check container exists** - The `PremagicWidget` component creates it automatically
+4. **Verify script loading** - Check Network tab in DevTools for `premagic-poster-widget.js`
 
-### Widget not re-initializing when navigating back?
-- The widget uses cache-busting to force re-initialization - this should work automatically
-- Check browser console for errors related to "LoaderObject"
-- Ensure the `PremagicWidget` component is properly unmounting (check React DevTools)
-- Verify that `unmountWidget()` is being called in the component cleanup
+### Form Autofill Not Working?
 
-### "Widget didn't find LoaderObject" error?
-- This error occurs when the widget script executes before the queue is initialized
-- The service initializes the queue at module load time to prevent this
-- If you see this error, check that `PremagicService.js` is imported correctly
-- Ensure you're not manually modifying `window._hw` before the widget initializes
+1. **Check selectors** - `autofillerConfig.selectors` must match your form field `name` attributes exactly
+2. **Verify enabled** - Ensure `autofillerConfig.enabled` is `true`
+3. **Check widget initialization** - Make sure `initLoginWidget()` is called in `useEffect`
 
+### Widget Not Re-initializing When Navigating Back?
+
+1. **Check cleanup** - The `PremagicWidget` component should automatically unmount on cleanup
+2. **Check browser console** - Look for "LoaderObject" errors
+3. **Verify React DevTools** - Ensure component is properly unmounting/remounting
+
+### "Widget didn't find LoaderObject" Error?
+
+This error means the widget script executed before the queue was initialized. This should be handled automatically, but if you see it:
+
+1. **Check imports** - Ensure `PremagicService.js` is imported correctly
+2. **Don't modify `window._hw`** - Don't manually set or modify `window._hw` before widget initialization
+3. **Check timing** - Ensure `initLoginWidget()` or `initPosterCreatorWidget()` is called in `useEffect`, not during render
+
+## Example Project Structure
+
+```
+your-react-app/
+├── public/
+│   └── index.html          # Add Premagic tracking scripts here
+├── src/
+│   ├── premagic-widgets/
+│   │   ├── PremagicService.js  # Widget service (configure here)
+│   │   └── PremagicWidget.js   # React component wrapper
+│   ├── pages/
+│   │   ├── RegistrationPage.js  # Use Login Widget here
+│   │   └── SuccessPage.js       # Use Poster Widget here
+│   └── ...
+└── package.json
+```
+
+## Advanced Usage
+
+### Custom Configuration Per Widget
+
+You can override the default configuration for each widget:
+
+```javascript
+// Login widget with custom redirect
+initLoginWidget({
+  redirectUrl: "/dashboard",
+  autofillerConfig: {
+    enabled: true,
+    selectors: {
+      email: "[name='userEmail']",  // Custom selector
+      // ... other selectors
+    }
+  }
+});
+
+// Poster widget for speakers
+initPosterCreatorWidget({
+  type: "SPEAKER",
+  widgetStyle: "preview"
+});
+```
+
+### Styling the Widget Container
+
+Add custom CSS classes to the widget container:
+
+```jsx
+<PremagicWidget 
+  variant="poster"
+  containerClassName="my-custom-class"
+/>
+```
+
+Then style it in your CSS:
+
+```css
+.my-custom-class {
+  margin: 20px 0;
+  padding: 20px;
+}
+```
 
 ## Support
 
 For issues related to:
 - **Premagic Widgets**: Contact Premagic support
-- **Integration Questions**: Refer to this documentation or contact your integration team
+- **Integration Questions**: Refer to this documentation
+
+## Technical Details
+
+### How Re-initialization Works
+
+When you navigate away from a page and come back:
+
+1. **Component unmounts** → `PremagicWidget` cleanup calls `unmountWidget()`
+2. **Cleanup happens** → Widget state, script elements, and window objects are cleaned up
+3. **Component remounts** → Widget re-initializes with fresh state
+4. **Cache-busting** → Script URL includes timestamp to force ES module re-execution
+
+This ensures widgets always work correctly when navigating between pages.
+
+### Script Loading
+
+The Premagic widget script is loaded dynamically:
+- Uses cache-busting (timestamp parameter) for re-initialization
+- Handles cases where script is already loaded
+- Uses ES module type for optimal performance
+- Queue system ensures init calls work whether script is loaded or not
