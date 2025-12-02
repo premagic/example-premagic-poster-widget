@@ -13,46 +13,33 @@ import React from 'react';
 const RegistrationForm = ({ formData, handleInputChange, handleSubmit, onCancel }) => {
   return (
     <form className="registration-form" onSubmit={handleSubmit}>
-      <div className="form-section">
-        <h2>Personal Information</h2>
-        
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="firstName">First Name *</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="lastName">Last Name *</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        </div>
-
+      <div className="form-row">
         <div className="form-group">
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="firstName">First Name *</label>
           <input
             type="text"
-            id="fullName"
-            name="fullName"
-            value={formData.fullName}
+            id="firstName"
+            name="firstName"
+            value={formData.firstName}
             onChange={handleInputChange}
+            required
           />
         </div>
 
+        <div className="form-group">
+          <label htmlFor="lastName">Last Name *</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+      </div>
+
+      <div className="form-row">
         <div className="form-group">
           <label htmlFor="emailId">Email Address *</label>
           <input
@@ -77,10 +64,7 @@ const RegistrationForm = ({ formData, handleInputChange, handleSubmit, onCancel 
           />
         </div>
       </div>
-
-      <div className="form-section">
-        <h2>Professional Information</h2>
-        
+      <div className="form-row">
         <div className="form-group">
           <label htmlFor="companyName">Company Name</label>
           <input
@@ -102,32 +86,19 @@ const RegistrationForm = ({ formData, handleInputChange, handleSubmit, onCancel 
             onChange={handleInputChange}
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="linkedinProfile">LinkedIn Profile URL</label>
-          <input
-            type="url"
-            id="linkedinProfile"
-            name="linkedinProfile"
-            value={formData.linkedinProfile}
-            onChange={handleInputChange}
-            placeholder="https://linkedin.com/in/yourprofile"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="photo">Photo URL</label>
-          <input
-            type="url"
-            id="photo"
-            name="photo"
-            value={formData.photo}
-            onChange={handleInputChange}
-            placeholder="https://example.com/photo.jpg"
-          />
-        </div>
       </div>
 
+      <div className="form-group">
+        <label htmlFor="linkedinProfile">LinkedIn Profile URL</label>
+        <input
+          type="url"
+          id="linkedinProfile"
+          name="linkedinProfile"
+          value={formData.linkedinProfile}
+          onChange={handleInputChange}
+          placeholder="https://linkedin.com/in/yourprofile"
+        />
+      </div>
       <div className="form-actions">
         <button type="button" className="btn-secondary" onClick={onCancel}>
           Cancel

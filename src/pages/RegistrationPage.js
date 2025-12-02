@@ -11,7 +11,6 @@ const RegistrationPage = () => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    fullName: '',
     companyName: '',
     jobTitle: '',
     emailId: '',
