@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { initLoginWidget, unmountWidget } from '../premagic-widgets/PremagicService';
-import PremagicWidget from '../premagic-widgets/PremagicWidget';
+import LoginWidget from '../premagic-widgets/LoginWidget';
 import RegistrationForm from '../components/RegistrationForm';
 import '../styles.css';
 
@@ -21,29 +20,14 @@ const RegistrationPage = () => {
     photo: ''
   });
 
-  useEffect(() => {
-    /**
-     * PREMAGIC LOGIN WIDGET INITIALIZATION
-     * 
-     * This widget allows users to quickly log in and auto-fill the registration form.
-     * 
-     * The configuration is handled by PremagicService. To customize:
-     * 1. Update DEFAULT_CONFIG in PremagicService.js with your Premagic credentials
-     * 2. Or pass custom config here: initLoginWidget({ shareId: "...", ... })
-     * 
-     * The autofillerConfig.selectors map Premagic fields to your form field names.
-     * Make sure the selectors (e.g., "[name='firstName']") match your HTML form field
-     * name attributes exactly. Update DEFAULT_AUTOFILLER_CONFIG in PremagicService.js
-     * if your form uses different field names.
-     * 
-     */
-    initLoginWidget();
-    
-    // Cleanup function to handle component unmount
-    return () => {
-      unmountWidget();
-    };
-  }, []);
+  // Premagic configuration
+  const premagicConfig = {
+    shareId: "AI-everything-Egypt",
+    projectId: "e8NkvbWmTxc",
+    eventId: "0a9b5b6e-b303-46cc-b48c-4b62c4e0f011",
+    websiteId: "ai-everything-egypt",
+    domain: "aieverything"
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +74,7 @@ const RegistrationPage = () => {
 
         <div className="registration-content">
           {/* Premagic Login Widget */}
-          <PremagicWidget variant="login" />
+          <LoginWidget config={premagicConfig} />
 
           <RegistrationForm
             formData={formData}

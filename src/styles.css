@@ -582,20 +582,6 @@ code {
   line-height: 1.6;
 }
 
-.premagic-poster-container {
-  background: #f8f9fa;
-  border-radius: 15px;
-  padding: 2rem;
-  margin-bottom: 3rem;
-  text-align: center;
-}
-
-.premagic-poster-container h2 {
-  font-size: 1.5rem;
-  color: #667eea;
-  margin-bottom: 1rem;
-}
-
 .poster-description {
   color: #666;
   margin-bottom: 2rem;

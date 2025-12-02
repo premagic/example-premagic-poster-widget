@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { initPosterCreatorWidget, unmountWidget } from '../premagic-widgets/PremagicService';
-import PremagicWidget from '../premagic-widgets/PremagicWidget';
+import PosterWidget from '../premagic-widgets/PosterWidget';
 import '../styles.css';
 
 const SuccessPage = () => {
@@ -41,25 +40,14 @@ const SuccessPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    /**
-     * PREMAGIC POSTER CREATOR WIDGET INITIALIZATION
-     * 
-     * This widget allows registered attendees to create and share event posters.
-     * 
-     * The configuration is handled by PremagicService. To customize:
-     * 1. Update DEFAULT_CONFIG in PremagicService.js with your Premagic credentials
-     * 2. Or pass custom config here: initPosterCreatorWidget({ shareId: "...", ... })
-     * 
-     * Make sure to use the same credentials as in RegistrationPage.js
-     */
-    initPosterCreatorWidget();
-    
-    // Cleanup function to handle component unmount
-    return () => {
-      unmountWidget();
-    };
-  }, []);
+  // Premagic configuration
+  const premagicConfig = {
+    shareId: "AI-everything-Egypt",
+    projectId: "e8NkvbWmTxc",
+    eventId: "0a9b5b6e-b303-46cc-b48c-4b62c4e0f011",
+    websiteId: "ai-everything-egypt",
+    domain: "aieverything"
+  };
 
   if (!ticket || !formData) {
     return (
@@ -89,8 +77,8 @@ const SuccessPage = () => {
 
           
           {/* Premagic Poster Creator Widget */}
-          <PremagicWidget 
-            variant="poster"
+          <PosterWidget 
+            config={premagicConfig}
             title="Create Your Event Poster"
             description="Personalize and share a poster to let your network know you're attending!"
           />
