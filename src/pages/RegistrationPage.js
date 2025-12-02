@@ -65,10 +65,6 @@ const RegistrationPage = () => {
       <div className="page-container">
         <div className="registration-header">
           <h1>Complete Your Registration</h1>
-          <div className="ticket-summary">
-            <span className="ticket-type">{ticket.name} Ticket</span>
-            <span className="ticket-price">{ticket.price} {ticket.currency}</span>
-          </div>
         </div>
 
         <div className="registration-content">

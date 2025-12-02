@@ -1,18 +1,3 @@
-/* ============================================
-   PREMAGIC EVENT - UNIFIED STYLES
-   ============================================
-   This file contains ALL styles for the application:
-   - Global/Reset styles
-   - App container styles
-   - EventPage styles
-   - RegistrationForm styles
-   - SuccessPage styles
-   ============================================ */
-
-/* ============================================
-   GLOBAL RESET & BASE STYLES
-   ============================================ */
-
 * {
   margin: 0;
   padding: 0;
@@ -357,15 +342,6 @@ code {
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-.premagic-widget-container {
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
 }
 
 .registration-form {
