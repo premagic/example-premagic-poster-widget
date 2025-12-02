@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /**
  * PREMAGIC LOGIN WIDGET
@@ -22,21 +22,30 @@ function loadScript() {
   (function(w,d,s,o,f,js,fjs){w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments);};js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];js.id=o;js.src=PM_URL;js.defer=1;js.type='module';(fjs?.parentNode?fjs.parentNode.insertBefore(js,fjs):d.head.appendChild(js));})(window,document,"script","premagic",PM_URL);
 }
 
-function initWidget(config) {
+function initWidget(config, elementId, retryCount = 0) {
   loadScript();
   window.premagic = window.premagic || function () { (window.premagic.q = window.premagic.q || []).push(arguments); };
-  window.premagic("init", config);
+
+  const element = document.getElementById(elementId);
+  if (element) {
+    window.premagic("init", config);
+  } else if (retryCount < 10) {
+    // Retry up to 10 times (max 100ms wait)
+    setTimeout(() => initWidget(config, elementId, retryCount + 1), 10);
+  }
 }
 
 function unmountWidget() {
   if (window.premagic && typeof window.premagic === 'function') {
     window.premagic("unmount");
   }
-  window.premagic = null;
-  document.getElementById('premagic')?.remove();
+  // Don't destroy window.premagic or remove script - allow re-initialization
 }
 
 export default function LoginWidget({ config }) {
+  const elementRef = useRef(null);
+  const elementId = 'widget-premagic';
+
   useEffect(() => {
     if (!config) {
       console.warn('LoginWidget: config prop is required');
@@ -54,13 +63,17 @@ export default function LoginWidget({ config }) {
       autofillerConfig: config.autofillerConfig || { enabled: true }
     };
 
-    initWidget(PM_config);
-    return () => unmountWidget();
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      initWidget(PM_config, elementId);
+    }, 0);
+
+    return unmountWidget;
   }, [config]);
 
   return (
     <div>
-      <div id="premagic-poster-creator-widget-root">
+      <div id={elementId} ref={elementRef}>
         <div style={{ margin: 'auto', width: '200px' }}>
           <div style={{ display: 'flex', gap: '16px' }}>
             <div className="premagic-widget-loading-sk"></div>
