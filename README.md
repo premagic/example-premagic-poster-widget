@@ -8,6 +8,7 @@ Sample apps demonstrating how to integrate **Premagic widgets** into event regis
 |--------|---------|-------------|
 | **LoginWidget** | LinkedIn login + form autofill for attendee registration | Registration / sign-up page |
 | **PosterWidget** | Attendee poster creator & social sharing | Success / confirmation page |
+| **Advocate Revenue Tracking** | Track ticket sales attributed to poster link referrals | Checkout / payment success page |
 
 ## Framework Samples
 
@@ -31,7 +32,7 @@ const premagicConfig = {
 };
 ```
 
-> **Note:** `projectId` and `eventId` have been removed. `websiteId` and `domain` are deprecated and will be removed in Q2 2026.
+> **Note:** `websiteId` and `domain` are deprecated and will be removed in Q2 2026, still required for now.
 
 ## Tracking Scripts
 
@@ -64,124 +65,44 @@ Add these to the `<head>` of every page where widgets are used:
 | `type` | string | No | Default: `"ATTENDEE"` |
 | `widgetStyle` | string | No | Default: `"preview"` |
 
+## Advocate Revenue Tracking
+
+Track ticket sales and calculate ROI for your event advocates. When attendees share posters (via the Poster Widget), the shared links contain tracking parameters. When someone clicks a poster link and purchases a ticket, you can attribute the sale to the advocate.
+
+### 1. Add the Tracking Script
+
+The conversion tracker script (`ptm.js`) should already be in your `<head>` (see [Tracking Scripts](#tracking-scripts) above). It must be present on **all pages** to capture traffic from poster links.
+
+### 2. Track Purchases
+
+Add this code to your **checkout success page**. Call it after a successful purchase:
+
+```js
+window.AdvocateTracking.trackPurchase({
+  orderId: '12345',      // Your unique order ID for reconciliation
+  orderCount: 2,         // Number of tickets/items purchased
+  value: 100.00,         // Total order value (without currency symbol)
+  currency: 'USD'        // Currency code in ISO 4217 format (e.g., USD, EUR, GBP)
+});
+```
+
+> **Note:** This is plain JavaScript -- no framework-specific wrapper needed. Just call it after payment confirmation.
+
 ## Notes
 
 - Both widgets are self-contained and handle script loading, initialization, and cleanup automatically
 - Form field selectors for autofill are configured via the Premagic API
 - Widgets automatically re-initialize when navigating between pages
+- `projectId` and `eventId` have been removed -- do NOT include them in any config
 
 ---
 
 ## Integrate with AI / LLM
 
-Copy the block below and paste it into your LLM (ChatGPT, Cursor, Copilot, etc.) to integrate Premagic widgets into your project. Replace placeholder values with your actual config.
+See [`LLM_GUIDE.md`](LLM_GUIDE.md) for a complete integration reference that you can provide to any AI coding assistant (Cursor, Copilot, ChatGPT, Windsurf, Codex, etc.).
 
-<details>
-<summary>Click to expand LLM prompt</summary>
+Each framework folder also has its own `LLM_GUIDE.md` with ready-to-copy component code:
 
-````text
-I need to integrate two Premagic widgets into my event registration web app. Here is everything you need to know:
-
-## What are Premagic Widgets?
-
-1. **LoginWidget** - Renders a LinkedIn login button + optional form autofill on registration pages. Place it on your registration/sign-up page.
-2. **PosterWidget** - Renders an attendee poster creator + social sharing. Place it on your success/confirmation page (after registration).
-
-## Step 1: Add Tracking Scripts
-
-Add these two tags inside <head> on every page that uses a widget:
-
-```html
-<link rel="preload" href="https://asts.premagic.com/s/poster-widget/premagic-poster-widget.js" as="script" crossorigin="anonymous" />
-<script src="https://asts.premagic.com/s/poster-conversion-tracker/ptm.js"></script>
-```
-
-## Step 2: Widget Core JavaScript
-
-Both widgets share this initialization code. Adapt it to your framework's lifecycle (e.g., useEffect in React, onMounted in Vue, ngOnInit in Angular):
-
-```js
-const PM_URL = 'https://asts.premagic.com/s/poster-widget/premagic-poster-widget.js';
-
-function loadScript() {
-  if (document.getElementById('premagic') || window.premagic) return;
-  (function(w,d,s,o,f,js,fjs){
-    w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments);};
-    js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
-    js.id=o;js.src=PM_URL;js.defer=1;js.type='module';
-    (fjs?.parentNode?fjs.parentNode.insertBefore(js,fjs):d.head.appendChild(js));
-  })(window,document,"script","premagic",PM_URL);
-}
-
-function initWidget(config, elementId, retryCount = 0) {
-  loadScript();
-  window.premagic = window.premagic || function () {
-    (window.premagic.q = window.premagic.q || []).push(arguments);
-  };
-  const element = document.getElementById(elementId);
-  if (element) {
-    window.premagic("init", config);
-  } else if (retryCount < 10) {
-    setTimeout(() => initWidget(config, elementId, retryCount + 1), 10);
-  }
-}
-
-function unmountWidget() {
-  if (window.premagic && typeof window.premagic === 'function') {
-    window.premagic("unmount");
-  }
-}
-```
-
-## Step 3: Configuration
-
-```js
-const config = {
-  shareId: "YOUR_SHARE_ID",       // Required - your Premagic share ID
-  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026, still required for now
-  domain: "YOUR_DOMAIN"           // DEPRECATED: will be removed in Q2 2026, still required for now
-};
-```
-
-NOTE: `projectId` and `eventId` are REMOVED and should NOT be included.
-
-## Step 4: LoginWidget (Registration Page)
-
-1. Add a container element: `<div id="widget-premagic"></div>`
-2. On component mount, call:
-   ```js
-   initWidget({
-     ...config,
-     embedWidgetFlow: "registration",
-     redirectUrl: "",                              // optional
-     autofillerConfig: { enabled: true }           // optional, enables form autofill
-   }, "widget-premagic");
-   ```
-3. On component unmount, call `unmountWidget()`.
-
-## Step 5: PosterWidget (Success/Confirmation Page)
-
-1. Add a container element: `<div id="widget-premagic"></div>`
-2. On component mount, call:
-   ```js
-   initWidget({
-     ...config,
-     embedWidgetFlow: "poster_creation",
-     type: "ATTENDEE",         // optional, default
-     widgetStyle: "preview"    // optional, default
-   }, "widget-premagic");
-   ```
-3. On component unmount, call `unmountWidget()`.
-
-## Important Notes
-
-- The widget element ID must be `widget-premagic`
-- Always call `unmountWidget()` on cleanup to prevent memory leaks
-- The script loading is idempotent (safe to call multiple times)
-- Both widgets handle their own initialization retry logic (up to 100ms wait for DOM)
-- Form field selectors for autofill are configured server-side via the Premagic API
-
-Please generate the widget integration code for my framework: [SPECIFY YOUR FRAMEWORK HERE, e.g., React, Vue 3, Angular, Svelte, Next.js, etc.]
-````
-
-</details>
+- [`react/LLM_GUIDE.md`](react/LLM_GUIDE.md)
+- [`angular/LLM_GUIDE.md`](angular/LLM_GUIDE.md)
+- [`vue/LLM_GUIDE.md`](vue/LLM_GUIDE.md)
