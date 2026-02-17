@@ -268,6 +268,61 @@ export class SuccessPageComponent {
 
 ---
 
+## PosterWidget with Pre-filled Data (No LoginWidget)
+
+When you already have user data from your own auth system and don't need the LinkedIn login (LoginWidget), pass a `prefillData` object to the PosterWidget config to pre-populate the poster with attendee details. This is ideal for attendee profile pages, post-purchase confirmation, or exhibitor dashboards.
+
+```typescript
+import { Component } from '@angular/core';
+import { PosterWidgetComponent } from './premagic-widgets/poster-widget.component';
+
+@Component({
+  selector: 'app-profile-page',
+  standalone: true,
+  imports: [PosterWidgetComponent],
+  template: `
+    <h1>{{ attendee.userName }}'s Profile</h1>
+    <app-poster-widget [config]="premagicConfig" />
+  `,
+})
+export class ProfilePageComponent {
+  attendee = {
+    externalId: 'ext_12345',
+    userName: 'John Doe',
+    userTitle: 'Senior Developer',
+    userCompany: 'Acme Corp',
+    userPhoto: 'https://example.com/photo.jpg',
+    email: 'john@example.com',
+    phone: '+1234567890',
+    registrationId: 'reg_67890',
+    sessionTitle: 'Conference 2025',
+  };
+
+  premagicConfig = {
+    shareId: 'YOUR_SHARE_ID',
+    websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
+    domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
+    prefillData: {
+      externalId: this.attendee.externalId,   // External user ID (optional)
+      userName: this.attendee.userName,        // Full name (optional)
+      userTitle: this.attendee.userTitle,      // Job title or role (optional)
+      userCompany: this.attendee.userCompany,  // Company name (optional)
+      userPhoto: this.attendee.userPhoto,      // URL to profile photo (optional)
+      email: this.attendee.email,              // Email address (optional)
+      phone: this.attendee.phone,              // Phone number (optional)
+      registrationId: this.attendee.registrationId, // Registration ID (optional)
+      sessionTitle: this.attendee.sessionTitle,     // Session or event title (optional)
+      exhibitorLogo: '',                       // URL to exhibitor logo (optional)
+      exhibitorBoothNumber: '',                // Booth number (optional)
+    },
+  };
+}
+```
+
+See the [root LLM_GUIDE.md](../LLM_GUIDE.md#prefilldata-reference) for the full prefillData field reference. A working example is in `src/app/pages/profile-page.component.ts`.
+
+---
+
 ## Advocate Revenue Tracking (Angular)
 
 This feature is framework-agnostic (plain JS), but here is how to call it in an Angular component:

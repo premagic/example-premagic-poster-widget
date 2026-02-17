@@ -12,7 +12,7 @@ Sample apps demonstrating how to integrate **Premagic widgets** into event regis
 
 ## Framework Samples
 
-Each subfolder contains a complete, runnable sample app with the same 3-page event registration flow:
+Each subfolder contains a complete, runnable sample app with a 4-page event registration flow:
 
 | Framework | Folder | Quick Start |
 |-----------|--------|-------------|
@@ -64,6 +64,34 @@ Add these to the `<head>` of every page where widgets are used:
 | `domain` | string | Yes | Deprecated -- removing Q2 2026 |
 | `type` | string | No | Default: `"ATTENDEE"` |
 | `widgetStyle` | string | No | Default: `"preview"` |
+| `prefillData` | object | No | Pre-populate poster with attendee data (see below) |
+
+### PosterWidget with `prefillData` (No LoginWidget)
+
+When you already have user information from your own auth system (no LinkedIn login needed), pass `prefillData` in the config to skip the LoginWidget and go straight to poster creation. This is useful for attendee profile pages, post-purchase confirmations, or exhibitor dashboards.
+
+```js
+const premagicConfig = {
+  shareId: "YOUR_SHARE_ID",
+  websiteId: "YOUR_WEBSITE_ID",   // Deprecated: removing Q2 2026
+  domain: "YOUR_DOMAIN",          // Deprecated: removing Q2 2026
+  prefillData: {
+    externalId: "ext_12345",         // External user ID from your system (optional)
+    userName: "John Doe",            // Full name (optional)
+    userTitle: "Senior Developer",   // Job title or role (optional)
+    userCompany: "Acme Corp",        // Company name (optional)
+    userPhoto: "https://example.com/photo.jpg", // URL to profile photo (optional)
+    email: "john@example.com",       // Email address (optional)
+    phone: "+1234567890",            // Phone number (optional)
+    registrationId: "reg_12345",     // Registration ID (optional)
+    sessionTitle: "Conference 2025", // Session or event title (optional)
+    exhibitorLogo: "https://example.com/logo.jpg", // Exhibitor logo URL (optional)
+    exhibitorBoothNumber: "101"      // Booth number (optional)
+  }
+};
+```
+
+Each sample app includes a `/profile` page demonstrating this pattern.
 
 ## Advocate Revenue Tracking
 

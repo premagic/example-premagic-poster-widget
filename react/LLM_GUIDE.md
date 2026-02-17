@@ -244,6 +244,46 @@ function SuccessPage() {
 
 ---
 
+## PosterWidget with Pre-filled Data (No LoginWidget)
+
+When you already have user data from your own auth system and don't need the LinkedIn login (LoginWidget), pass a `prefillData` object to the PosterWidget config to pre-populate the poster with attendee details. This is ideal for attendee profile pages, post-purchase confirmation, or exhibitor dashboards.
+
+```jsx
+import PosterWidget from './premagic-widgets/PosterWidget';
+
+function ProfilePage({ user }) {
+  const premagicConfig = {
+    shareId: "YOUR_SHARE_ID",
+    websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
+    domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
+    prefillData: {
+      externalId: user.id,                // External user ID from your system (optional)
+      userName: user.name,                // Full name (optional)
+      userTitle: user.jobTitle,           // Job title or role (optional)
+      userCompany: user.company,          // Company name (optional)
+      userPhoto: user.avatarUrl,          // URL to profile photo (optional)
+      email: user.email,                  // Email address (optional)
+      phone: user.phone,                  // Phone number (optional)
+      registrationId: user.regId,         // Registration ID (optional)
+      sessionTitle: "Conference 2025",    // Session or event title (optional)
+      exhibitorLogo: user.companyLogo,    // URL to exhibitor logo (optional)
+      exhibitorBoothNumber: user.booth,   // Booth number (optional)
+    }
+  };
+
+  return (
+    <div>
+      <h1>{user.name}'s Profile</h1>
+      <PosterWidget config={premagicConfig} />
+    </div>
+  );
+}
+```
+
+See the [root LLM_GUIDE.md](../LLM_GUIDE.md#prefilldata-reference) for the full prefillData field reference. A working example is in `src/pages/ProfilePage.js`.
+
+---
+
 ## Advocate Revenue Tracking (React)
 
 This feature is framework-agnostic (plain JS), but here is how to call it in a React component:

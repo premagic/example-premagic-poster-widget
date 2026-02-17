@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import EventPage from './pages/EventPage';
 import RegistrationPage from './pages/RegistrationPage';
 import SuccessPage from './pages/SuccessPage';
+import ProfilePage from './pages/ProfilePage';
 import './styles.css';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<EventPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/success" element={<SuccessPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
   );

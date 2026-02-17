@@ -138,7 +138,7 @@ unmountWidget();
 Renders a poster creator that lets attendees generate personalized event posters and share them on social media. The shared poster links include tracking for advocate attribution.
 
 ### Placement
-Add to your **success / confirmation page**, after registration or ticket purchase.
+Add to your **success / confirmation page** (after registration) or **attendee profile page** (when user data is already available from your own system).
 
 ### Container Element
 Same as LoginWidget:
@@ -150,7 +150,7 @@ Same as LoginWidget:
 ### Widget Core JavaScript
 Uses the same `loadScript()`, `initWidget()`, and `unmountWidget()` functions as the LoginWidget (see Feature 1 above). Do NOT duplicate the script -- reuse the same functions.
 
-### Initialization
+### Initialization (Basic)
 
 On component mount, call:
 
@@ -164,6 +164,40 @@ initWidget({
   widgetStyle: "preview"          // Optional: default "preview"
 }, "widget-premagic");
 ```
+
+### Initialization with Pre-filled Data (No LoginWidget)
+
+When you already have user information from your own authentication system and do **not** need the LoginWidget, you can pass a `prefillData` object to pre-populate the poster with attendee details:
+
+```js
+initWidget({
+  shareId: "YOUR_SHARE_ID",
+  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
+  domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
+  embedWidgetFlow: "poster_creation",
+  type: "ATTENDEE",
+  widgetStyle: "preview",
+  prefillData: {
+    externalId: "ext_12345",         // External user ID from your system (optional)
+    userName: "John Doe",            // Full name of the user (optional)
+    userTitle: "Senior Developer",   // Job title or role (optional)
+    userCompany: "Acme Corp",        // Company name (optional)
+    userPhoto: "https://example.com/photo.jpg", // URL to user profile photo (optional)
+    email: "john@example.com",       // Email address (optional)
+    phone: "+1234567890",            // Phone number (optional)
+    registrationId: "reg_12345",     // Registration ID (optional)
+    sessionTitle: "Conference 2025", // Session or event title (optional)
+    exhibitorLogo: "https://example.com/exhibitor-logo.jpg", // URL to exhibitor logo (optional)
+    exhibitorBoothNumber: "101"      // Booth number (optional)
+  }
+}, "widget-premagic");
+```
+
+This is useful for:
+- **Attendee profile pages** where the user is already logged into your system
+- **Post-purchase confirmation** where you have the buyer's details from the order
+- **Exhibitor/sponsor dashboards** where company info is already known
+- Any page where you want to skip the LinkedIn login step and go straight to poster creation
 
 ### Cleanup
 
@@ -183,6 +217,25 @@ unmountWidget();
 | `embedWidgetFlow` | string | Yes | Must be `"poster_creation"` |
 | `type` | string | No | Default: `"ATTENDEE"` |
 | `widgetStyle` | string | No | Default: `"preview"` |
+| `prefillData` | object | No | Pre-populate poster with attendee details (see below) |
+
+### prefillData Reference
+
+All fields are optional. Pass only the ones you have:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `externalId` | string | External user ID from your system (for reconciliation) |
+| `userName` | string | Full name of the attendee |
+| `userTitle` | string | Job title or role |
+| `userCompany` | string | Company or organization name |
+| `userPhoto` | string | URL to user's profile photo |
+| `email` | string | Email address |
+| `phone` | string | Phone number |
+| `registrationId` | string | Registration ID from your system |
+| `sessionTitle` | string | Session or event title |
+| `exhibitorLogo` | string | URL to exhibitor/sponsor logo |
+| `exhibitorBoothNumber` | string | Booth number (for exhibitors) |
 
 ---
 

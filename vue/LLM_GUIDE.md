@@ -255,6 +255,59 @@ const premagicConfig = {
 
 ---
 
+## PosterWidget with Pre-filled Data (No LoginWidget)
+
+When you already have user data from your own auth system and don't need the LinkedIn login (LoginWidget), pass a `prefillData` object to the PosterWidget config to pre-populate the poster with attendee details. This is ideal for attendee profile pages, post-purchase confirmation, or exhibitor dashboards.
+
+```vue
+<script setup>
+import PosterWidget from './premagic-widgets/PosterWidget.vue'
+
+// In a real app, this data comes from your auth system / API
+const attendee = {
+  externalId: 'ext_12345',
+  userName: 'John Doe',
+  userTitle: 'Senior Developer',
+  userCompany: 'Acme Corp',
+  userPhoto: 'https://example.com/photo.jpg',
+  email: 'john@example.com',
+  phone: '+1234567890',
+  registrationId: 'reg_67890',
+  sessionTitle: 'Conference 2025',
+}
+
+const premagicConfig = {
+  shareId: 'YOUR_SHARE_ID',
+  websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
+  domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
+  prefillData: {
+    externalId: attendee.externalId,   // External user ID (optional)
+    userName: attendee.userName,        // Full name (optional)
+    userTitle: attendee.userTitle,      // Job title or role (optional)
+    userCompany: attendee.userCompany,  // Company name (optional)
+    userPhoto: attendee.userPhoto,      // URL to profile photo (optional)
+    email: attendee.email,              // Email address (optional)
+    phone: attendee.phone,              // Phone number (optional)
+    registrationId: attendee.registrationId, // Registration ID (optional)
+    sessionTitle: attendee.sessionTitle,     // Session or event title (optional)
+    exhibitorLogo: '',                  // URL to exhibitor logo (optional)
+    exhibitorBoothNumber: '',           // Booth number (optional)
+  },
+}
+</script>
+
+<template>
+  <div>
+    <h1>{{ attendee.userName }}'s Profile</h1>
+    <PosterWidget :config="premagicConfig" />
+  </div>
+</template>
+```
+
+See the [root LLM_GUIDE.md](../LLM_GUIDE.md#prefilldata-reference) for the full prefillData field reference. A working example is in `src/pages/ProfilePage.vue`.
+
+---
+
 ## Advocate Revenue Tracking (Vue)
 
 This feature is framework-agnostic (plain JS), but here is how to call it in a Vue component:
