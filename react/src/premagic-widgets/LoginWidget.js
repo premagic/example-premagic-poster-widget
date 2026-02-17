@@ -1,17 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 
 /**
- * PREMAGIC POSTER WIDGET
+ * PREMAGIC LOGIN WIDGET
  * 
- * Simple component for Premagic poster creator widget. Just copy, paste, and pass your config.
+ * Simple component for Premagic login widget. Just copy, paste, and pass your config.
  * 
  * @example
- * <PosterWidget config={{
+ * <LoginWidget config={{
  *   shareId: "YOUR_SHARE_ID",
- *   projectId: "YOUR_PROJECT_ID",
- *   eventId: "YOUR_EVENT_ID",
- *   websiteId: "YOUR_WEBSITE_ID",
- *   domain: "YOUR_DOMAIN"
+ *   websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
+ *   domain: "YOUR_DOMAIN"           // DEPRECATED: will be removed in Q2 2026
  * }} />
  */
 
@@ -42,25 +40,23 @@ function unmountWidget() {
   // Don't destroy window.premagic or remove script - allow re-initialization
 }
 
-export default function PosterWidget({ config }) {
+export default function LoginWidget({ config }) {
   const elementRef = useRef(null);
   const elementId = 'widget-premagic';
 
   useEffect(() => {
     if (!config) {
-      console.warn('PosterWidget: config prop is required');
+      console.warn('LoginWidget: config prop is required');
       return;
     }
 
     const PM_config = {
       shareId: config.shareId,
-      projectId: config.projectId,
-      eventId: config.eventId,
-      websiteId: config.websiteId,
-      domain: config.domain,
-      embedWidgetFlow: "poster_creation",
-      type: config.type || "ATTENDEE",
-      widgetStyle: config.widgetStyle || "preview"
+      websiteId: config.websiteId,   // DEPRECATED: will be removed in Q2 2026
+      domain: config.domain,         // DEPRECATED: will be removed in Q2 2026
+      embedWidgetFlow: "registration",
+      redirectUrl: config.redirectUrl || "",
+      autofillerConfig: config.autofillerConfig || { enabled: true }
     };
 
     // Small delay to ensure DOM is ready
@@ -74,10 +70,9 @@ export default function PosterWidget({ config }) {
   return (
     <div>
       <div id={elementId} ref={elementRef}>
-        <div style={{ background: '#fff', borderRadius: '16px', padding: '16px', margin: 'auto', width: '400px' }}>
-          <div className="premagic-widget-loading-sk" style={{ height: '300px' }}></div>
-          <div style={{ height: '16px' }}></div>
+        <div style={{ margin: 'auto', width: '200px' }}>
           <div style={{ display: 'flex', gap: '16px' }}>
+            <div className="premagic-widget-loading-sk"></div>
             <div className="premagic-widget-loading-sk"></div>
           </div>
         </div>

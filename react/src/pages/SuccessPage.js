@@ -43,10 +43,8 @@ const SuccessPage = () => {
   // Premagic configuration
   const premagicConfig = {
     shareId: "AI-everything-Egypt",
-    projectId: "e8NkvbWmTxc",
-    eventId: "0a9b5b6e-b303-46cc-b48c-4b62c4e0f011",
-    websiteId: "ai-everything-egypt",
-    domain: "aieverything"
+    websiteId: "ai-everything-egypt",  // DEPRECATED: will be removed in Q2 2026
+    domain: "aieverything"             // DEPRECATED: will be removed in Q2 2026
   };
 
   if (!ticket || !formData) {

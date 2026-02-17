@@ -1,7 +1,7 @@
 {
-  "name": "premagic-event-example",
+  "name": "premagic-widget-sample-react",
   "version": "1.0.0",
-  "description": "Sample event page with Premagic widgets",
+  "description": "React sample app demonstrating Premagic widget integration",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
