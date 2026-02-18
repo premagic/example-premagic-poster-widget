@@ -295,6 +295,29 @@ window.AdvocateTracking.trackPurchase({
 6. Do NOT include `projectId` or `eventId` in any config -- they have been removed
 7. `websiteId` and `domain` are deprecated and will be removed in Q2 2026, but are still required for now
 
+## IMPORTANT: Autofill Sync for Framework Forms
+
+The LoginWidget autofills form fields by setting DOM input `.value` properties directly. Most modern frameworks (React, Angular, Vue) do **NOT** detect programmatic DOM value changes -- they only track values through their own state/model bindings. This means autofilled data will appear visually in the inputs but won't be captured when the form is submitted.
+
+**You MUST add a polling mechanism** to sync DOM values back into your framework's form state. Poll every 500ms, compare each input's DOM `.value` against the framework's model, and update the model when they differ. Stop polling once required fields are filled.
+
+Example pattern (framework-agnostic):
+
+```js
+const FIELD_IDS = ['firstName', 'lastName', 'emailId', 'companyName', 'jobTitle'];
+
+const pollInterval = setInterval(() => {
+  FIELD_IDS.forEach(id => {
+    const input = document.getElementById(id);
+    if (input && input.value !== getModelValue(id)) {
+      setModelValue(id, input.value);  // Update your framework's state/model
+    }
+  });
+}, 500);
+```
+
+See each framework's `LLM_GUIDE.md` for the specific implementation (React `useEffect` + `useState`, Angular `AfterViewInit` + `FormGroup.setValue`, Vue `onMounted` + reactive).
+
 ## Framework-Specific Guides
 
 For ready-to-copy component code in your framework, see:
