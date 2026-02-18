@@ -43,10 +43,8 @@ const SuccessPage = () => {
   // Premagic configuration
   const premagicConfig = {
     shareId: "AI-everything-Egypt",
-    projectId: "e8NkvbWmTxc",
-    eventId: "0a9b5b6e-b303-46cc-b48c-4b62c4e0f011",
-    websiteId: "ai-everything-egypt",
-    domain: "aieverything"
+    websiteId: "ai-everything-egypt",  // DEPRECATED: will be removed in Q2 2026
+    domain: "aieverything"             // DEPRECATED: will be removed in Q2 2026
   };
 
   if (!ticket || !formData) {
@@ -56,7 +54,7 @@ const SuccessPage = () => {
           <div className="error-message">
             <h2>Invalid registration</h2>
             <p>Please complete the registration form first.</p>
-            <button onClick={() => navigate('/')}>Go to Event Page</button>
+            <button onClick={() => navigate('/register/select')}>Go to Event Page</button>
           </div>
         </div>
       </div>
@@ -84,7 +82,7 @@ const SuccessPage = () => {
           />
 
           <div className="success-actions">
-            <button className="btn-primary" onClick={() => navigate('/')}>
+            <button className="btn-primary" onClick={() => navigate('/register/select')}>
               Back to Event Page
             </button>
           </div>
