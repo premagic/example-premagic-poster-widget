@@ -51,7 +51,7 @@ function handleCancel() {
       <template v-else>
         <div class="registration-header">
           <h1>Register for AI Everything Egypt</h1>
-          <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem">
+          <p style="color: #6b7280; font-size: 1rem">
             {{ ticket.name }} Ticket - {{ ticket.price }} {{ ticket.currency }}
           </p>
         </div>

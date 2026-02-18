@@ -61,7 +61,7 @@ const ProfilePage = () => {
                   height: '80px',
                   borderRadius: '50%',
                   objectFit: 'cover',
-                  border: '3px solid #667eea'
+                  border: '2px solid #e5e7eb'
                 }}
               />
             </div>
@@ -69,16 +69,16 @@ const ProfilePage = () => {
             <p className="success-message">
               {attendee.userTitle} at <strong>{attendee.userCompany}</strong>
             </p>
-            <p style={{ color: '#888', fontSize: '0.9rem', marginTop: '0.5rem' }}>
+            <p style={{ color: '#6b7280', fontSize: '0.875rem', marginTop: '0.5rem' }}>
               {attendee.sessionTitle} &middot; Registration #{attendee.registrationId}
             </p>
           </div>
 
           <div style={{ margin: '2rem 0' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '0.5rem', color: '#333' }}>
+            <h3 style={{ textAlign: 'center', marginBottom: '0.5rem', color: '#1f2937' }}>
               Create Your Event Poster
             </h3>
-            <p style={{ textAlign: 'center', color: '#666', marginBottom: '1.5rem' }}>
+            <p style={{ textAlign: 'center', color: '#4b5563', marginBottom: '1.5rem' }}>
               Your profile info is already filled in. Personalize and share your poster!
             </p>
             <PosterWidget config={premagicConfig} />

@@ -68,12 +68,18 @@ cd vue && npm install && npm run dev        # http://localhost:5173
 ```
 - `websiteId` and `domain` are deprecated but still required until Q2 2026.
 
-### Styling
-- Global styles in each framework's `src/styles.css` (or `src/styles.css` for Angular).
-- Gradient theme: `#667eea` to `#764ba2`.
-- Rounded corners (`border-radius: 20px` for cards, `50px` for buttons).
+### Styling (Vitaly Friedman design principles)
+- Global styles in each framework's `src/styles.css`.
+- **No CSS-in-JS, no Tailwind, no CSS modules** -- plain CSS only.
+- Clean, content-first design: off-white backgrounds (`#f8f9fb`), white cards with subtle borders (`1px solid #e5e7eb`) and minimal shadows.
+- Accent color: `#667eea` used sparingly for interactive elements, focus rings, and active states -- not as page backgrounds.
+- WCAG AA+ contrast: primary text `#1f2937`, secondary text `#4b5563`, muted text `#6b7280`.
+- Typography: system font stack, `font-weight: 800` for headings, no `text-shadow`.
+- Buttons: solid `background: #667eea`, `border-radius: 8px`, `min-height: 48px` (touch target). No gradients, no pill shapes, no transform effects.
+- Cards: `border-radius: 12px`, `border: 1px solid #e5e7eb`, subtle `box-shadow`. Selected state uses left accent border.
+- Forms: `min-height: 48px` inputs, `border: 1.5px solid #d1d5db`, visible `:focus-visible` outlines on all interactive elements.
+- Spacing: 4px/8px rhythm (0.25rem, 0.5rem, 0.75rem, 1rem, 1.5rem, 2rem, 3rem).
 - BEM-ish flat class names (e.g. `.main-header-nav-item`, `.ticket-card`).
-- No CSS-in-JS, no Tailwind, no CSS modules -- plain CSS only.
 
 ### Routing
 - React: `react-router-dom` v6 with `<BrowserRouter>` in `index.js`, `<Routes>` in `App.js`.
