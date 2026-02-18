@@ -95,6 +95,6 @@ export class SuccessPageComponent implements OnInit {
   }
 
   goToEventPage(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/register/select']);
   }
 }

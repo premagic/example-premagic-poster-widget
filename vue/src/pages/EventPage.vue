@@ -44,7 +44,7 @@ function selectTicket(ticket) {
 function handleBuyTicket() {
   if (!selectedTicket.value) return
   router.push({
-    path: '/register',
+    path: '/register/form',
     state: { ticket: JSON.parse(JSON.stringify(selectedTicket.value)) },
   })
 }

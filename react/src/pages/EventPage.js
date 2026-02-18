@@ -47,7 +47,7 @@ const EventPage = () => {
 
   const handleBuyTicket = () => {
     if (selectedTicket) {
-      navigate('/register', { state: { ticket: selectedTicket } });
+      navigate('/register/form', { state: { ticket: selectedTicket } });
     }
   };
 

@@ -5,8 +5,9 @@ import { SuccessPageComponent } from './pages/success-page.component';
 import { ProfilePageComponent } from './pages/profile-page.component';
 
 export const routes: Routes = [
-  { path: '', component: EventPageComponent },
-  { path: 'register', component: RegistrationPageComponent },
-  { path: 'success', component: SuccessPageComponent },
+  { path: '', redirectTo: 'register/select', pathMatch: 'full' },
+  { path: 'register/select', component: EventPageComponent },
+  { path: 'register/form', component: RegistrationPageComponent },
+  { path: 'register/success', component: SuccessPageComponent },
   { path: 'profile', component: ProfilePageComponent },
 ];

@@ -85,7 +85,7 @@ const ProfilePage = () => {
           </div>
 
           <div className="success-actions">
-            <button className="btn-primary" onClick={() => navigate('/')}>
+            <button className="btn-primary" onClick={() => navigate('/register/select')}>
               Back to Event Page
             </button>
           </div>

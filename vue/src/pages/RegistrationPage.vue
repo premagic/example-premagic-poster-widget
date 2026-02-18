@@ -31,11 +31,11 @@ function handleSubmit(formData) {
     'registrationData',
     JSON.stringify(registrationData)
   )
-  window.location.href = '/success'
+  window.location.href = '/register/success'
 }
 
 function handleCancel() {
-  router.push('/')
+  router.push('/register/select')
 }
 </script>
 
@@ -45,7 +45,7 @@ function handleCancel() {
       <div v-if="!ticket" class="error-message">
         <h2>No Ticket Selected</h2>
         <p>Please go back and select a ticket first.</p>
-        <button @click="router.push('/')">Back to Event Page</button>
+        <button @click="router.push('/register/select')">Back to Event Page</button>
       </div>
 
       <template v-else>

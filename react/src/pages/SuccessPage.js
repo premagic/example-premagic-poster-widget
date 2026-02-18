@@ -54,7 +54,7 @@ const SuccessPage = () => {
           <div className="error-message">
             <h2>Invalid registration</h2>
             <p>Please complete the registration form first.</p>
-            <button onClick={() => navigate('/')}>Go to Event Page</button>
+            <button onClick={() => navigate('/register/select')}>Go to Event Page</button>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ const SuccessPage = () => {
           />
 
           <div className="success-actions">
-            <button className="btn-primary" onClick={() => navigate('/')}>
+            <button className="btn-primary" onClick={() => navigate('/register/select')}>
               Back to Event Page
             </button>
           </div>

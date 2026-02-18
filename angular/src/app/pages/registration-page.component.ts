@@ -56,14 +56,14 @@ export class RegistrationPageComponent {
 
   onSubmit(formData: any): void {
     sessionStorage.setItem('registrationData', JSON.stringify({ ticket: this.ticket, formData }));
-    window.location.href = '/success';
+    window.location.href = '/register/success';
   }
 
   onCancel(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/register/select']);
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/register/select']);
   }
 }

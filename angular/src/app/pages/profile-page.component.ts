@@ -93,6 +93,6 @@ export class ProfilePageComponent {
   constructor(private router: Router) {}
 
   goToEventPage(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/register/select']);
   }
 }

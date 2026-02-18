@@ -7,16 +7,20 @@ import ProfilePage from '../pages/ProfilePage.vue'
 const routes = [
   {
     path: '/',
+    redirect: '/register/select',
+  },
+  {
+    path: '/register/select',
     name: 'Event',
     component: EventPage,
   },
   {
-    path: '/register',
+    path: '/register/form',
     name: 'Register',
     component: RegistrationPage,
   },
   {
-    path: '/success',
+    path: '/register/success',
     name: 'Success',
     component: SuccessPage,
   },

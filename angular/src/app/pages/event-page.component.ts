@@ -113,7 +113,7 @@ export class EventPageComponent {
 
   buyTicket(): void {
     if (this.selectedTicket) {
-      this.router.navigate(['/register'], { state: { ticket: this.selectedTicket } });
+      this.router.navigate(['/register/form'], { state: { ticket: this.selectedTicket } });
     }
   }
 }

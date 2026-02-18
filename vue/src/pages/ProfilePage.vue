@@ -85,7 +85,7 @@ const premagicConfig = {
         </div>
 
         <div class="success-actions">
-          <button class="btn-primary" @click="router.push('/')">Back to Event Page</button>
+          <button class="btn-primary" @click="router.push('/register/select')">Back to Event Page</button>
         </div>
       </div>
     </div>

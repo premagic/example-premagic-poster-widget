@@ -33,7 +33,7 @@ const premagicConfig = {
       <div v-if="!registrationData" class="error-message">
         <h2>No Registration Data</h2>
         <p>It seems you haven't completed the registration process.</p>
-        <button @click="router.push('/')">Back to Event Page</button>
+        <button @click="router.push('/register/select')">Back to Event Page</button>
       </div>
 
       <div v-else class="success-content">
@@ -59,7 +59,7 @@ const premagicConfig = {
         </div>
 
         <div class="success-actions">
-          <button class="btn-primary" @click="router.push('/')">
+          <button class="btn-primary" @click="router.push('/register/select')">
             Back to Event Page
           </button>
         </div>

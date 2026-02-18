@@ -84,11 +84,11 @@ const RegistrationPage = () => {
     // Final sync before submit
     syncDomToState();
     sessionStorage.setItem('registrationData', JSON.stringify({ ticket, formData }));
-    window.location.href = '/success';
+    window.location.href = '/register/success';
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate('/register/select');
   };
 
   if (!ticket) {
@@ -98,7 +98,7 @@ const RegistrationPage = () => {
           <div className="error-message">
             <h2>No ticket selected</h2>
             <p>Please go back and select a ticket first.</p>
-            <button onClick={() => navigate('/')}>Go Back</button>
+            <button onClick={() => navigate('/register/select')}>Go Back</button>
           </div>
         </div>
       </div>
