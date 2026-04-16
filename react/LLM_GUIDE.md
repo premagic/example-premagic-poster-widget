@@ -64,8 +64,6 @@ export default function LoginWidget({ config }) {
 
     const PM_config = {
       shareId: config.shareId,
-      websiteId: config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: "registration",
       redirectUrl: config.redirectUrl || "",
       autofillerConfig: config.autofillerConfig || { enabled: true }
@@ -113,8 +111,6 @@ import LoginWidget from './premagic-widgets/LoginWidget';
 function RegistrationPage() {
   const premagicConfig = {
     shareId: "YOUR_SHARE_ID",
-    websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-    domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
   };
 
   return (
@@ -179,8 +175,6 @@ export default function PosterWidget({ config }) {
 
     const PM_config = {
       shareId: config.shareId,
-      websiteId: config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: "poster_creation",
       type: config.type || "ATTENDEE",
       widgetStyle: config.widgetStyle || "preview"
@@ -229,8 +223,6 @@ import PosterWidget from './premagic-widgets/PosterWidget';
 function SuccessPage() {
   const premagicConfig = {
     shareId: "YOUR_SHARE_ID",
-    websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-    domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
   };
 
   return (
@@ -254,8 +246,6 @@ import PosterWidget from './premagic-widgets/PosterWidget';
 function ProfilePage({ user }) {
   const premagicConfig = {
     shareId: "YOUR_SHARE_ID",
-    websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-    domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
     prefillData: {
       externalId: user.id,                // External user ID from your system (optional)
       userName: user.name,                // Full name (optional)

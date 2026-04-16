@@ -53,8 +53,6 @@ function unmountWidget() {
 onMounted(() => {
   const widgetConfig = {
     shareId: props.config.shareId,
-    websiteId: props.config.websiteId, // DEPRECATED: will be removed in Q2 2026
-    domain: props.config.domain, // DEPRECATED: will be removed in Q2 2026
     embedWidgetFlow: 'registration',
     redirectUrl: props.config.redirectUrl || '',
     autofillerConfig: props.config.autofillerConfig || { enabled: true },

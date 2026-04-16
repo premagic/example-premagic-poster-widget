@@ -31,8 +31,6 @@ const attendee = {
 // Premagic configuration with prefillData
 const premagicConfig = {
   shareId: 'AI-everything-Egypt',
-  websiteId: 'ai-everything-egypt', // DEPRECATED: will be removed in Q2 2026
-  domain: 'aieverything', // DEPRECATED: will be removed in Q2 2026
   prefillData: {
     externalId: attendee.externalId,
     userName: attendee.userName,

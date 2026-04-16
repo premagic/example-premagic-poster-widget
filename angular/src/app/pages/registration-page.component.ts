@@ -45,8 +45,6 @@ export class RegistrationPageComponent {
 
   premagicConfig = {
     shareId: 'AI-everything-Egypt',
-    websiteId: 'ai-everything-egypt',  // DEPRECATED: will be removed in Q2 2026
-    domain: 'aieverything',            // DEPRECATED: will be removed in Q2 2026
   };
 
   constructor(private router: Router) {

@@ -7,9 +7,7 @@ import React, { useEffect, useRef } from 'react';
  * 
  * @example
  * <LoginWidget config={{
- *   shareId: "YOUR_SHARE_ID",
- *   websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
- *   domain: "YOUR_DOMAIN"           // DEPRECATED: will be removed in Q2 2026
+ *   shareId: "YOUR_SHARE_ID"
  * }} />
  */
 
@@ -52,8 +50,6 @@ export default function LoginWidget({ config }) {
 
     const PM_config = {
       shareId: config.shareId,
-      websiteId: config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: "registration",
       redirectUrl: config.redirectUrl || "",
       autofillerConfig: config.autofillerConfig || { enabled: true }

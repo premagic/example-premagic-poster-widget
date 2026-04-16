@@ -7,9 +7,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
  *
  * @example
  * <app-login-widget [config]="{
- *   shareId: 'YOUR_SHARE_ID',
- *   websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
- *   domain: 'YOUR_DOMAIN'           // DEPRECATED: will be removed in Q2 2026
+ *   shareId: 'YOUR_SHARE_ID'
  * }" />
  */
 
@@ -93,8 +91,6 @@ export class LoginWidgetComponent implements OnInit, OnDestroy {
 
     const pmConfig = {
       shareId: this.config.shareId,
-      websiteId: this.config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: this.config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: 'registration',
       redirectUrl: this.config.redirectUrl || '',
       autofillerConfig: this.config.autofillerConfig || { enabled: true },

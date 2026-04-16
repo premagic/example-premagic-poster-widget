@@ -61,12 +61,9 @@ cd vue && npm install && npm run dev        # http://localhost:5173
 ### Premagic widget config
 ```js
 {
-  shareId: "...",           // Required -- the only long-term config key
-  websiteId: "...",         // DEPRECATED: removing Q2 2026, still required for now
-  domain: "...",            // DEPRECATED: removing Q2 2026, still required for now
+  shareId: "...",           // Required -- the only config key
 }
 ```
-- `websiteId` and `domain` are deprecated but still required until Q2 2026.
 
 ### Styling (Vitaly Friedman design principles)
 - Global styles in each framework's `src/styles.css`.
@@ -97,10 +94,9 @@ cd vue && npm install && npm run dev        # http://localhost:5173
 
 ## Do NOT
 
-- Add `projectId` or `eventId` to any widget config.
+- Add `projectId`, `eventId`, `websiteId`, or `domain` to any widget config -- all have been removed.
 - Install CSS frameworks (Tailwind, Bootstrap, etc.) -- keep plain CSS.
 - Share code across framework folders at build time -- each is independent.
-- Remove the `websiteId` or `domain` config fields yet (deprecated but still required).
 - Add new dependencies unless strictly necessary -- these are minimal sample apps.
 
 ## LLM_GUIDE.md files

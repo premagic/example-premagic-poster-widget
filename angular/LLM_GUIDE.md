@@ -99,8 +99,6 @@ export class LoginWidgetComponent implements OnInit, OnDestroy {
 
     const pmConfig = {
       shareId: this.config.shareId,
-      websiteId: this.config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: this.config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: 'registration',
       redirectUrl: this.config.redirectUrl || '',
       autofillerConfig: this.config.autofillerConfig || { enabled: true },
@@ -136,8 +134,6 @@ import { LoginWidgetComponent } from './premagic-widgets/login-widget.component'
 export class RegistrationPageComponent {
   premagicConfig = {
     shareId: 'YOUR_SHARE_ID',
-    websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-    domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
   };
 }
 ```
@@ -224,8 +220,6 @@ export class PosterWidgetComponent implements OnInit, OnDestroy {
 
     const pmConfig = {
       shareId: this.config.shareId,
-      websiteId: this.config.websiteId,   // DEPRECATED: will be removed in Q2 2026
-      domain: this.config.domain,         // DEPRECATED: will be removed in Q2 2026
       embedWidgetFlow: 'poster_creation',
       type: this.config.type || 'ATTENDEE',
       widgetStyle: this.config.widgetStyle || 'preview',
@@ -260,8 +254,6 @@ import { PosterWidgetComponent } from './premagic-widgets/poster-widget.componen
 export class SuccessPageComponent {
   premagicConfig = {
     shareId: 'YOUR_SHARE_ID',
-    websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-    domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
   };
 }
 ```
@@ -300,8 +292,6 @@ export class ProfilePageComponent {
 
   premagicConfig = {
     shareId: 'YOUR_SHARE_ID',
-    websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-    domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
     prefillData: {
       externalId: this.attendee.externalId,   // External user ID (optional)
       userName: this.attendee.userName,        // Full name (optional)

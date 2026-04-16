@@ -53,8 +53,6 @@ function unmountWidget() {
 onMounted(() => {
   const widgetConfig = {
     shareId: props.config.shareId,
-    websiteId: props.config.websiteId, // DEPRECATED: will be removed in Q2 2026
-    domain: props.config.domain, // DEPRECATED: will be removed in Q2 2026
     embedWidgetFlow: 'poster_creation',
     type: props.config.type || 'ATTENDEE',
     widgetStyle: props.config.widgetStyle || 'preview',

@@ -74,8 +74,6 @@ function unmountWidget() {
 onMounted(() => {
   const widgetConfig = {
     shareId: props.config.shareId,
-    websiteId: props.config.websiteId, // DEPRECATED: will be removed in Q2 2026
-    domain: props.config.domain, // DEPRECATED: will be removed in Q2 2026
     embedWidgetFlow: 'registration',
     redirectUrl: props.config.redirectUrl || '',
     autofillerConfig: props.config.autofillerConfig || { enabled: true },
@@ -119,8 +117,6 @@ import LoginWidget from './premagic-widgets/LoginWidget.vue'
 
 const premagicConfig = {
   shareId: 'YOUR_SHARE_ID',
-  websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-  domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
 }
 </script>
 
@@ -195,8 +191,6 @@ function unmountWidget() {
 onMounted(() => {
   const widgetConfig = {
     shareId: props.config.shareId,
-    websiteId: props.config.websiteId, // DEPRECATED: will be removed in Q2 2026
-    domain: props.config.domain, // DEPRECATED: will be removed in Q2 2026
     embedWidgetFlow: 'poster_creation',
     type: props.config.type || 'ATTENDEE',
     widgetStyle: props.config.widgetStyle || 'preview',
@@ -240,8 +234,6 @@ import PosterWidget from './premagic-widgets/PosterWidget.vue'
 
 const premagicConfig = {
   shareId: 'YOUR_SHARE_ID',
-  websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-  domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
 }
 </script>
 
@@ -278,8 +270,6 @@ const attendee = {
 
 const premagicConfig = {
   shareId: 'YOUR_SHARE_ID',
-  websiteId: 'YOUR_WEBSITE_ID',   // DEPRECATED: will be removed in Q2 2026
-  domain: 'YOUR_DOMAIN',          // DEPRECATED: will be removed in Q2 2026
   prefillData: {
     externalId: attendee.externalId,   // External user ID (optional)
     userName: attendee.userName,        // Full name (optional)
