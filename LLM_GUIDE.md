@@ -34,13 +34,11 @@ Both widget features (Quick Register and Poster Widget) require a config object:
 
 ```js
 const premagicConfig = {
-  shareId: "YOUR_SHARE_ID",       // Required -- your Premagic share ID
-  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026, still required for now
-  domain: "YOUR_DOMAIN"           // DEPRECATED: will be removed in Q2 2026, still required for now
+  shareId: "YOUR_SHARE_ID"   // Required -- your Premagic share ID
 };
 ```
 
-**IMPORTANT:** `projectId` and `eventId` have been REMOVED. Do NOT include them.
+**IMPORTANT:** `projectId`, `eventId`, `websiteId`, and `domain` have been REMOVED. Do NOT include them.
 
 ---
 
@@ -103,8 +101,6 @@ On component mount, call:
 ```js
 initWidget({
   shareId: "YOUR_SHARE_ID",
-  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-  domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
   embedWidgetFlow: "registration",
   redirectUrl: "",                 // Optional: URL to redirect after login
   autofillerConfig: { enabled: true }  // Optional: enables form field autofill
@@ -124,8 +120,6 @@ unmountWidget();
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
 | `shareId` | string | Yes | Your Premagic share ID |
-| `websiteId` | string | Yes | DEPRECATED -- removing Q2 2026 |
-| `domain` | string | Yes | DEPRECATED -- removing Q2 2026 |
 | `embedWidgetFlow` | string | Yes | Must be `"registration"` |
 | `redirectUrl` | string | No | URL to redirect after login. Default: `""` |
 | `autofillerConfig` | object | No | Default: `{ enabled: true }`. Autofills form fields from LinkedIn profile |
@@ -157,8 +151,6 @@ On component mount, call:
 ```js
 initWidget({
   shareId: "YOUR_SHARE_ID",
-  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-  domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
   embedWidgetFlow: "poster_creation",
   type: "ATTENDEE",               // Optional: default "ATTENDEE"
   widgetStyle: "preview"          // Optional: default "preview"
@@ -172,8 +164,6 @@ When you already have user information from your own authentication system and d
 ```js
 initWidget({
   shareId: "YOUR_SHARE_ID",
-  websiteId: "YOUR_WEBSITE_ID",   // DEPRECATED: will be removed in Q2 2026
-  domain: "YOUR_DOMAIN",          // DEPRECATED: will be removed in Q2 2026
   embedWidgetFlow: "poster_creation",
   type: "ATTENDEE",
   widgetStyle: "preview",
@@ -212,8 +202,6 @@ unmountWidget();
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
 | `shareId` | string | Yes | Your Premagic share ID |
-| `websiteId` | string | Yes | DEPRECATED -- removing Q2 2026 |
-| `domain` | string | Yes | DEPRECATED -- removing Q2 2026 |
 | `embedWidgetFlow` | string | Yes | Must be `"poster_creation"` |
 | `type` | string | No | Default: `"ATTENDEE"` |
 | `widgetStyle` | string | No | Default: `"preview"` |
@@ -292,8 +280,7 @@ window.AdvocateTracking.trackPurchase({
 3. The `loadScript()` function is idempotent -- safe to call multiple times
 4. Both widgets retry DOM element lookup up to 10 times (100ms max wait)
 5. Form field selectors for autofill are configured server-side via the Premagic API
-6. Do NOT include `projectId` or `eventId` in any config -- they have been removed
-7. `websiteId` and `domain` are deprecated and will be removed in Q2 2026, but are still required for now
+6. Do NOT include `projectId`, `eventId`, `websiteId`, or `domain` in any config -- they have all been removed
 
 ## IMPORTANT: Autofill Sync for Framework Forms
 

@@ -26,13 +26,9 @@ Pass a config object to each widget:
 
 ```js
 const premagicConfig = {
-  shareId: "YOUR_SHARE_ID",       // Required
-  websiteId: "YOUR_WEBSITE_ID",   // Deprecated: removing Q2 2026
-  domain: "YOUR_DOMAIN"           // Deprecated: removing Q2 2026
+  shareId: "YOUR_SHARE_ID"   // Required
 };
 ```
-
-> **Note:** `websiteId` and `domain` are deprecated and will be removed in Q2 2026, still required for now.
 
 ## Tracking Scripts
 
@@ -50,8 +46,6 @@ Add these to the `<head>` of every page where widgets are used:
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | `shareId` | string | Yes | Your Premagic share ID |
-| `websiteId` | string | Yes | Deprecated -- removing Q2 2026 |
-| `domain` | string | Yes | Deprecated -- removing Q2 2026 |
 | `redirectUrl` | string | No | URL to redirect after login |
 | `autofillerConfig` | object | No | Default: `{ enabled: true }` |
 
@@ -60,8 +54,6 @@ Add these to the `<head>` of every page where widgets are used:
 | Prop | Type | Required | Description |
 |------|------|----------|-------------|
 | `shareId` | string | Yes | Your Premagic share ID |
-| `websiteId` | string | Yes | Deprecated -- removing Q2 2026 |
-| `domain` | string | Yes | Deprecated -- removing Q2 2026 |
 | `type` | string | No | Default: `"ATTENDEE"` |
 | `widgetStyle` | string | No | Default: `"preview"` |
 | `prefillData` | object | No | Pre-populate poster with attendee data (see below) |
@@ -73,8 +65,6 @@ When you already have user information from your own auth system (no LinkedIn lo
 ```js
 const premagicConfig = {
   shareId: "YOUR_SHARE_ID",
-  websiteId: "YOUR_WEBSITE_ID",   // Deprecated: removing Q2 2026
-  domain: "YOUR_DOMAIN",          // Deprecated: removing Q2 2026
   prefillData: {
     externalId: "ext_12345",         // External user ID from your system (optional)
     userName: "John Doe",            // Full name (optional)
@@ -121,7 +111,7 @@ window.AdvocateTracking.trackPurchase({
 - Both widgets are self-contained and handle script loading, initialization, and cleanup automatically
 - Form field selectors for autofill are configured via the Premagic API
 - Widgets automatically re-initialize when navigating between pages
-- `projectId` and `eventId` have been removed -- do NOT include them in any config
+- `projectId`, `eventId`, `websiteId`, and `domain` have been removed -- do NOT include them in any config
 
 ---
 
